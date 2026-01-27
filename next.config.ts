@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
     "http://192.168.100.9:3001",
     "http://192.168.100.9",
     "http://localhost:3001",
-    'local-origin.dev', '*.local-origin.dev'
+    'local-origin.dev', '*.local-origin.dev',
+    "192.168.1.40"
   ],
 };
 
