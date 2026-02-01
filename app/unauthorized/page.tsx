@@ -1,25 +1,30 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function UnauthorizedPage() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-8">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center bg-transparent p-6 sm:p-10">
+      <Card className="w-full max-w-md overflow-hidden border-destructive/30 bg-destructive/5">
+        <CardHeader className="border-b border-destructive/20 text-center">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-destructive/10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-destructive"
+              className="h-7 w-7 text-destructive"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth={2}
-            >
+              strokeWidth={2}>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -27,15 +32,24 @@ export default function UnauthorizedPage() {
               />
             </svg>
           </div>
-          <CardTitle className="text-2xl">Unauthorized Access</CardTitle>
-          <CardDescription className="mt-2">
-            You don&apos;t have permission to access this queue. Please check your QR code or contact support if you believe this is an error.
+          <CardTitle className="text-xl text-destructive">
+            Unauthorized Access
+          </CardTitle>
+          <CardDescription className="mt-1 text-destructive/80">
+            You don&apos;t have permission to access this queue. Please check
+            your QR code or contact support if you believe this is an error.
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex justify-center">
-          <Button onClick={() => router.push('/')} variant="outline">
-            Go Back
-          </Button>
+        <CardContent className="pt-6">
+          <div className="rounded-lg border border-destructive/25 bg-destructive/10 p-4 text-sm text-destructive/80">
+            Tip: Make sure you scanned the right QR code for this location.
+          </div>
+
+          <div className="mt-5 flex justify-center">
+            <Button onClick={() => router.push("/")} variant="destructive">
+              Go Back
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

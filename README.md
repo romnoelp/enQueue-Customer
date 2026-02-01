@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# enQueue Customer
+
+Customer-facing web app for enQueue. This project is a Next.js (App Router) frontend that:
+
+- Accepts a QR identifier via the `qr_id` query param
+- Requests queue access from a backend service
+- Stores the returned `sessionId` cookie
+- Redirects the customer to the appropriate UI route
+
+## Tech Stack
+
+- Next.js (App Router)
+- React + TypeScript
+- Tailwind CSS
+- shadcn/ui-style components (Button/Card/Input, etc.)
+- Radix UI primitives
+- `axios` for HTTP
+- `motion` for subtle background effects
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ (recommended)
+- npm
+
+### Install
+
+```bash
+npm install
+```
+
+### Environment Variables
+
+Create `.env.local` in the project root:
+
+```bash
+NEXT_PUBLIC_FUNCTIONS_BASE_URL="https://your-backend.example.com"
+```
+
+`NEXT_PUBLIC_FUNCTIONS_BASE_URL` is used by the entry route to call:
+
+`GET {BASE_URL}/queues/queue-access?initialQrId=<qr_id>`
+
+### Run (Development)
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `http://localhost:3000/?qr_id=YOUR_QR_ID`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Note: development origin allow-listing is configured in `next.config.ts` via `allowedDevOrigins` for LAN testing.
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/` (Entry)
+  - Reads `qr_id` from the URL
+  - Requests queue access from the backend
+  - Sets a `sessionId` cookie when provided
+  - Redirects to `response.data.path`
 
-## Deploy on Vercel
+- `/form`
+  - Standalone customer information form UI
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `/queue`
+  - Queue UI (currently uses mock stations for UI work)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/unauthorized`
+  - Unauthorized access screen (destructive/red styling)
+
+## Project Structure
+
+Common folders:
+
+- `app/`
+  - `page.tsx`: entry logic (QR access + redirect)
+  - `form/page.tsx`: customer form page
+  - `queue/page.tsx`: queue page
+  - `unauthorized/page.tsx`: unauthorized page
+  - `_components/`: app-level UI components
+
+- `components/ui/`
+  - shared UI primitives (Button/Card/Input/etc.)
+
+## Notes
+
+- The customer form currently builds the email as `${localPart}@neu.edu.ph`.
+- The access flow stores `sessionId` as a browser cookie with `SameSite=Lax`.
+
+## Contributing
+
+1. Create a feature branch
+2. Make changes
+3. Run `npm run lint`
+4. Open a pull request

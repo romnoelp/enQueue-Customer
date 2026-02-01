@@ -2,6 +2,13 @@
 
 import React, { useState } from "react";
 import AvailableStations from "@/app/_components/AvailableStations";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Page() {
   const mockStations = [
@@ -17,23 +24,28 @@ export default function Page() {
   );
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8">
-      <div className="w-full max-w-2xl p-6 border rounded-md">
-        <h2 className="text-2xl font-semibold">Queue</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Queue details and status will appear here. This page is the dedicated
-          UI for viewing your queue entry.
-        </p>
-
-        <div className="mt-6">
-          <h3 className="text-lg font-medium mb-2">Available Stations</h3>
-          <AvailableStations stations={mockStations} onPick={setSelected} />
-          {selected && (
-            <div className="mt-3 text-sm text-muted-foreground">
-              Selected station: {selected.name}
+    <div className="min-h-screen bg-transparent p-6 sm:p-10">
+      <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-5xl items-center justify-center">
+        <Card className="w-full max-w-2xl">
+          <CardHeader className="border-b">
+            <CardTitle className="text-xl">Queue</CardTitle>
+            <CardDescription>
+              Queue details and status will appear here. This page is the
+              dedicated UI for viewing your queue entry.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pt-6">
+            <div>
+              <h3 className="mb-2 text-base font-medium">Available Stations</h3>
+              <AvailableStations stations={mockStations} onPick={setSelected} />
+              {selected && (
+                <div className="mt-3 text-sm text-muted-foreground">
+                  Selected station: {selected.name}
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
