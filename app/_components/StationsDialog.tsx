@@ -12,8 +12,7 @@ import {
 } from "@/components/animate-ui/components/radix/dialog";
 import AvailableStations from "./AvailableStations";
 import { Button } from "@/components/ui/button";
-
-type Station = { id: string; name: string };
+import type { Station } from "@/types/station";
 
 export default function StationsDialog({
   open,
